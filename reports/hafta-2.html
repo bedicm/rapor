@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hafta 2: Detaylı Analiz ve Gereksinimler - Bedi Cam</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .report-content {
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .report-content h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .report-content h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-color);
+        }
+        .report-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .report-content li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Hafta 2: Sistem Analizi ve Gereksinim Belirleme</h1>
+            <p class="subtitle">11 Mart 2026</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="../index.html" class="back-link">← Ana Sayfaya Dön</a>
+        
+        <article class="report-content">
+            <h2>Bu Hafta Neler Yapıldı?</h2>
+            <p>Projenin ikinci haftasında, Döner Salonu Sipariş Takip Otomasyonu için kapsamlı bir sistem analizi gerçekleştirilmiş ve yazılım isterleri detaylandırılmıştır. Bu süreçte işletme sahibi, kasiyer ve garson rolleri üzerinden iş akışları tanımlanmıştır.</p>
+            
+            <h2>Yapılan Çalışmalar:</h2>
+            
+            <h3>1. Kapsam Yönetimi ve Sınırların Belirlenmesi</h3>
+            <p>Projenin odak noktası "İşletme İçi Sipariş Yönetimi" olarak netleştirilmiştir. İlk aşamada kurye takibi, detaylı stok yönetimi ve CRM gibi modüllerin kapsam dışı tutulmasına, sistemin ana işlevinin garson-kasa-mutfak arasındaki iletişimi dijitalleştirmek olmasına karar verilmiştir.</p>
+
+            <h3>2. İşlevsel İsterlerin Belirlenmesi</h3>
+            <ul>
+                <li><strong>Menü Yönetimi:</strong> Kasiyerin ürünleri aktif/pasif yapabilmesi, fiyat güncellemesi ve günlük menü oluşturma yetkisi.</li>
+                <li><strong>Sipariş Süreci:</strong> Garsonların mobil arayüzden masa seçimi yaparak sipariş girmesi ve bu verinin anlık olarak kasa paneline iletilmesi.</li>
+                <li><strong>Durum Takibi:</strong> Siparişlerin "Alındı", "Hazırlanıyor" ve "Servis Edildi" aşamalarının hem kasa hem de garson ekranlarından takip edilebilmesi.</li>
+                <li><strong>İptal ve Güncelleme Kuralları:</strong> Müşteri/Garson tarafından yapılacak iptallerin belirli bir süre (örn. 5-10 dk) ile sınırlandırılması ve yönetici onayına bağlanması.</li>
+            </ul>
+
+            <h3>3. Kullanıcı Rolleri ve Yetkilendirme</h3>
+            <ul>
+                <li><strong>Sistem Yöneticisi (Salon Sahibi/Kasiyer):</strong> Menü düzenleme, çalışma saatlerini belirleme, toplu sipariş iptali ve raporlama.</li>
+                <li><strong>Garson:</strong> Sipariş alma, masa durumunu görüntüleme ve sipariş durum güncelleme.</li>
+            </ul>
+
+            <h3>4. Teknik Mimari ve Veritabanı Planlaması</h3>
+            <p>Sistemin 3 katmanlı mimari yapısında (Sunum, İş Mantığı, Veri Katmanı) çalışması öngörülmüştür. Java Swing ile geliştirilecek masaüstü uygulaması, MySQL veritabanı ile JDBC üzerinden haberleşecektir. Veritabanında <code>Urunler</code>, <code>Siparisler</code>, <code>Masalar</code> ve <code>Kullanicilar</code> tablolarının tasarımı başlatılmıştır.</p>
+
+            <h2>Önümüzdeki Haftanın Hedefleri:</h2>
+            <p>Gelecek hafta, belirlenen isterler doğrultusunda MySQL Workbench üzerinde tam ER Diyagramının oluşturulması ve Java projesinde temel veritabanı bağlantı sınıflarının (DAO pattern) yazılması planlanmaktadır.</p>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Bedi Cam - Sistem Analizi ve Tasarımı Dersi</p>
+        </div>
+    </footer>
+</body>
+</html>
