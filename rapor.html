@@ -178,13 +178,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       Proje Hakkında
     </div>
     <p style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:1.45rem;font-weight:400;color:rgba(255,255,255,0.88);line-height:1.55;margin-bottom:20px">
-      Garsonlar senkronize çalışmayan bir uygulama kullanıyordu — siparişler çakışıyor, işler birbirine giriyordu.
+      Aynı salonda çalışan garsonlar birbirinin ne yaptığını bilmiyordu. Sistem onları birbirinden koparıyordu.
     </p>
     <p style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.9;margin-bottom:16px">
-      Döner salonunda mevcut sistem garsonlar arasında senkronizasyon sağlayamıyordu. Hangi masanın siparişi alındı, hangisi bekliyor, kasa ne görüyor — hiçbiri net değildi. Bu karmaşa hem garsonları hem müşterileri olumsuz etkiliyordu.
+      Mevcut uygulama gerçek zamanlı senkronizasyon sağlayamıyordu. Bir garson sipariş alırken diğeri aynı masaya yönelebiliyordu; kasa farklı bir şey görüyor, garson farklı bir şey giriyordu. Hangi sipariş alındı, hangisi bekliyor, ne zaman servis edildi — hiçbiri net değildi. Bu belirsizlik hem garsonların iş yükünü artırıyor hem de müşteri deneyimini zedeliyordu.
     </p>
     <p style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.9">
-      Bu sorunu çözmek için hızlı çalışan, kolay kullanımlı bir otomasyon sistemi geliştiriyoruz. Garsonun girdiği sipariş anında kasaya yansıyor, tüm cihazlar senkronize çalışıyor. <strong style="color:rgba(255,255,255,0.75);font-weight:500">Java Swing</strong> ile sade ve hızlı bir arayüz, <strong style="color:rgba(255,255,255,0.75);font-weight:500">MySQL</strong> ile güvenilir veri yönetimi — tek hedef: garsonun işini kolaylaştırmak.
+      Geliştirdiğimiz sistem bu karmaşayı kökten ortadan kaldırıyor. Garsonun girdiği her sipariş anında tüm cihazlara yansıyor; kim ne aldı, hangi masa bekliyor, kasa ne görüyor — hepsi tek bir ekranda, gerçek zamanlı. <strong style="color:rgba(255,255,255,0.75);font-weight:500">Java Swing</strong> ile öğrenme eğrisi sıfıra yakın bir arayüz, <strong style="color:rgba(255,255,255,0.75);font-weight:500">MySQL</strong> ile kararlı veri altyapısı. Hız ve sadelik — başka bir şey değil.
     </p>
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px">
       <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;padding:5px 14px;border-radius:999px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.28);color:#fde68a">Java Swing</span>
