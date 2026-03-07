@@ -1,72 +1,295 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hafta 1: Proje Başlangıcı - Bedi Cam</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .back-link {
-            display: inline-block;
-            margin-bottom: 2rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .report-content {
-            background-color: var(--card-bg);
-            padding: 3rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-        }
-        .report-content h2 {
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-        .report-content ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .report-content li {
-            margin-bottom: 0.5rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hafta 1 — Proje Başlangıcı | Bedi Cam</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --serif: 'Cormorant Garamond', serif;
+  --sans:  'Plus Jakarta Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: #08060f;
+  color: #fff;
+  font-family: var(--sans);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0; pointer-events: none;
+}
+
+/* Orbs */
+.orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5; animation: orbDrift ease-in-out infinite; }
+.orb-1 { width: 550px; height: 550px; background: radial-gradient(circle, #7c3aed, #4f1cb8); top: -180px; left: -120px; animation-duration: 14s; }
+.orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #ec4899, #be185d); top: 30%; right: -100px; animation-duration: 18s; animation-delay: -6s; }
+.orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, #0ea5e9, #0369a1); bottom: -80px; left: 25%; animation-duration: 16s; animation-delay: -10s; }
+@keyframes orbDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(30px,-20px) scale(1.04); }
+  66%      { transform: translate(-15px,15px) scale(0.97); }
+}
+
+/* Nav */
+nav {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  z-index: 100; display: flex; align-items: center; justify-content: space-between;
+  gap: 32px; padding: 14px 28px; border-radius: 999px;
+  width: min(860px, calc(100% - 40px));
+  background: rgba(15,10,30,0.6);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: #fff; }
+.nav-logo span { color: #c084fc; font-style: italic; }
+.back-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.5); text-decoration: none;
+  padding: 5px 14px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: all 0.2s;
+}
+.back-btn:hover { background: rgba(124,58,237,0.25); border-color: rgba(192,132,252,0.4); color: #e9d5ff; }
+.nav-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 8px #4ade80; animation: pulse 2.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+/* Page hero */
+.page-hero {
+  position: relative; z-index: 1;
+  padding: 140px 24px 80px;
+  max-width: 860px; margin: 0 auto;
+  animation: fadeUp 0.7s ease both;
+}
+.week-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #c084fc; background: rgba(124,58,237,0.2);
+  border: 1px solid rgba(192,132,252,0.3);
+  padding: 7px 18px; border-radius: 999px; margin-bottom: 28px;
+}
+.week-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #c084fc; box-shadow: 0 0 8px #c084fc; }
+.page-hero h1 {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 300; line-height: 1.1; letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.page-date {
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+/* Divider */
+.divider {
+  position: relative; z-index: 1;
+  max-width: 860px; margin: 0 auto 48px;
+  padding: 0 24px;
+}
+.divider hr { border: none; border-top: 1px solid rgba(255,255,255,0.07); }
+
+/* Content */
+.content {
+  position: relative; z-index: 1;
+  max-width: 860px; margin: 0 auto;
+  padding: 0 24px 100px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* Glass card */
+.glass-card {
+  border-radius: 24px; padding: 36px 40px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: border-color 0.3s, background 0.3s;
+  animation: fadeUp 0.6s ease both;
+}
+.glass-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(192,132,252,0.2); }
+.glass-card:nth-child(1) { animation-delay: 0.05s; }
+.glass-card:nth-child(2) { animation-delay: 0.1s; }
+.glass-card:nth-child(3) { animation-delay: 0.15s; }
+
+.card-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+}
+.card-icon {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  background: rgba(124,58,237,0.25); border: 1px solid rgba(192,132,252,0.2);
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.card-title {
+  font-family: var(--serif); font-style: italic;
+  font-size: 1.45rem; font-weight: 300; color: rgba(255,255,255,0.9);
+}
+
+/* Items list */
+.items-list { display: flex; flex-direction: column; gap: 12px; }
+.item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 18px; border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.2s, border-color 0.2s;
+}
+.item:hover { background: rgba(255,255,255,0.06); border-color: rgba(192,132,252,0.2); }
+.item-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+}
+.dot-purple { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
+.dot-pink   { background: #f472b6; box-shadow: 0 0 8px rgba(244,114,182,0.5); }
+.dot-blue   { background: #38bdf8; box-shadow: 0 0 8px rgba(56,189,248,0.5); }
+.dot-green  { background: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.5); }
+.item-content { flex: 1; }
+.item-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); margin-bottom: 4px;
+}
+.item-text { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.7; }
+.item-text strong { font-weight: 600; color: rgba(255,255,255,0.9); }
+
+/* Text paragraph */
+.glass-card p {
+  font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.85;
+}
+
+/* Next week card */
+.next-card {
+  background: rgba(124,58,237,0.1);
+  border-color: rgba(192,132,252,0.2);
+}
+.next-card:hover { background: rgba(124,58,237,0.15); border-color: rgba(192,132,252,0.3); }
+
+/* Footer */
+footer {
+  position: relative; z-index: 1;
+  max-width: 860px; margin: 0 auto; padding: 0 24px 60px;
+}
+.footer-card {
+  border-radius: 24px; padding: 36px 44px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255,255,255,0.07);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-name { font-family: var(--serif); font-style: italic; font-size: 1.4rem; font-weight: 300; color: rgba(255,255,255,0.6); }
+.footer-copy { font-size: 11px; color: rgba(255,255,255,0.15); letter-spacing: 0.08em; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+@media (max-width: 600px) {
+  .page-hero { padding: 120px 20px 60px; }
+  .glass-card { padding: 28px 24px; }
+  .content { padding: 0 20px 80px; }
+  nav { padding: 12px 20px; }
+}
+</style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Hafta 1: Proje Başlangıcı ve Planlama</h1>
-            <p class="subtitle">4 Mart 2026</p>
+
+<div class="orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<nav>
+  <div class="nav-logo">Bedi <span>Cam</span></div>
+  <a href="../index.html" class="back-btn">← Ana Sayfa</a>
+  <div class="nav-dot"></div>
+</nav>
+
+<div class="page-hero">
+  <div class="week-badge">Hafta 01</div>
+  <h1>Proje Başlangıcı ve Planlama</h1>
+  <div class="page-date">4 Mart 2026</div>
+</div>
+
+<div class="divider"><hr></div>
+
+<div class="content">
+
+  <!-- Bu hafta ne yapıldı -->
+  <div class="glass-card">
+    <div class="card-header">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Bu Hafta Neler Yapıldı?</div>
+    </div>
+    <p>Sipariş Takip Otomasyonu projesinin ilk haftasında, projenin temel yapı taşlarını oluşturmak ve yol haritasını belirlemek üzerine odaklanıldı.</p>
+  </div>
+
+  <!-- Yapılan çalışmalar -->
+  <div class="glass-card">
+    <div class="card-header">
+      <div class="card-icon">✅</div>
+      <div class="card-title">Yapılan Çalışmalar</div>
+    </div>
+    <div class="items-list">
+      <div class="item">
+        <div class="item-dot dot-purple"></div>
+        <div class="item-content">
+          <div class="item-label">Proje Tanımı</div>
+          <div class="item-text">İşletmelerin sipariş takibini kolaylaştıracak bir <strong>masaüstü uygulamasının</strong> genel kapsamı çizildi.</div>
         </div>
-    </header>
-
-    <main class="container">
-        <a href="../index.html" class="back-link">← Ana Sayfaya Dön</a>
-        
-        <article class="report-content">
-            <h2>Bu Hafta Neler Yapıldı?</h2>
-            <p>Sipariş Takip Otomasyonu projesinin ilk haftasında, projenin temel yapı taşlarını oluşturmak ve yol haritasını belirlemek üzerine odaklanıldı.</p>
-            
-            <h2>Yapılan Çalışmalar:</h2>
-            <ul>
-                <li><strong>Proje Tanımı:</strong> İşletmelerin sipariş, stok ve müşteri takibini kolaylaştıracak bir masaüstü uygulamasının genel kapsamı çizildi.</li>
-                <li><strong>Gereksinim Analizi:</strong> Sistemin temel fonksiyonları (Sipariş ekleme, stok güncelleme, müşteri kaydı) belirlendi.</li>
-                <li><strong>Teknoloji Seçimi:</strong> Kullanıcı arayüzü için <strong>Java Swing</strong>, veritabanı yönetimi için ise <strong>MySQL Workbench</strong> kullanılmasına karar verildi.</li>
-                <li><strong>Ortam Kurulumu:</strong> JDK, IntelliJ IDEA ve MySQL Server kurulumları tamamlanarak ilk bağlantı testleri yapıldı.</li>
-            </ul>
-
-            <h2>Önümüzdeki Haftanın Hedefleri:</h2>
-            <p>Gelecek hafta veritabanı şemasının (ER Diyagramı) tasarlanması ve Java ile MySQL arasındaki bağlantıyı sağlayacak JDBC katmanının oluşturulması hedeflenmektedir.</p>
-        </article>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Bedi Cam - Sistem Analizi ve Tasarımı Dersi</p>
+      </div>
+      <div class="item">
+        <div class="item-dot dot-pink"></div>
+        <div class="item-content">
+          <div class="item-label">Gereksinim Analizi</div>
+          <div class="item-text">Sistemin temel fonksiyonları belirlendi: <strong>sipariş ekleme ve stok güncelleme.</strong></div>
         </div>
-    </footer>
+      </div>
+      <div class="item">
+        <div class="item-dot dot-blue"></div>
+        <div class="item-content">
+          <div class="item-label">Teknoloji Seçimi</div>
+          <div class="item-text">Kullanıcı arayüzü için <strong>Java Swing</strong>, veritabanı yönetimi için <strong>MySQL Workbench</strong> kullanılmasına karar verildi.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-dot dot-green"></div>
+        <div class="item-content">
+          <div class="item-label">Ortam Kurulumu</div>
+          <div class="item-text"><strong>JDK, IntelliJ IDEA</strong> ve <strong>MySQL Server</strong> kurulumları tamamlanarak ilk bağlantı testleri yapıldı.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gelecek hafta -->
+  <div class="glass-card next-card">
+    <div class="card-header">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">Önümüzdeki Haftanın Hedefleri</div>
+    </div>
+    <p>Gelecek hafta veritabanı şemasının (ER Diyagramı) tasarlanması ve Java ile MySQL arasındaki bağlantıyı sağlayacak <strong style="color:rgba(255,255,255,0.8)">JDBC katmanının</strong> oluşturulması hedeflenmektedir.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-card">
+    <div class="footer-name">Bedi Cam</div>
+    <div class="footer-copy">© 2026 — Sistem Analizi ve Tasarımı Dersi</div>
+  </div>
+</footer>
+
 </body>
 </html>
