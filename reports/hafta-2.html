@@ -4,372 +4,136 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hafta 2 — Sistem Analizi | Bedi Cam</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --serif: 'Cormorant Garamond', serif;
-  --sans:  'Plus Jakarta Sans', sans-serif;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: #08060f;
-  color: #fff;
-  font-family: var(--sans);
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  z-index: 0; pointer-events: none;
-}
-
-.orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-.orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5; animation: orbDrift ease-in-out infinite; }
-.orb-1 { width: 550px; height: 550px; background: radial-gradient(circle, #7c3aed, #4f1cb8); top: -180px; left: -120px; animation-duration: 14s; }
-.orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #0ea5e9, #0369a1); top: 30%; right: -100px; animation-duration: 18s; animation-delay: -6s; }
-.orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, #ec4899, #be185d); bottom: -80px; left: 25%; animation-duration: 16s; animation-delay: -10s; }
-@keyframes orbDrift {
-  0%,100% { transform: translate(0,0) scale(1); }
-  33%      { transform: translate(30px,-20px) scale(1.04); }
-  66%      { transform: translate(-15px,15px) scale(0.97); }
-}
-
-nav {
-  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-  z-index: 100; display: flex; align-items: center; justify-content: space-between;
-  gap: 32px; padding: 14px 28px; border-radius: 999px;
-  width: min(860px, calc(100% - 40px));
-  background: rgba(15,10,30,0.6);
-  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-}
-.nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: #fff; }
-.nav-logo span { color: #c084fc; font-style: italic; }
-.back-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.5); text-decoration: none;
-  padding: 5px 14px; border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.12);
-  transition: all 0.2s;
-}
-.back-btn:hover { background: rgba(124,58,237,0.25); border-color: rgba(192,132,252,0.4); color: #e9d5ff; }
-.nav-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 8px #4ade80; animation: pulse 2.5s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
-
-.page-hero {
-  position: relative; z-index: 1;
-  padding: 140px 24px 80px;
-  max-width: 860px; margin: 0 auto;
-  animation: fadeUp 0.7s ease both;
-}
-.week-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-  color: #7dd3fc; background: rgba(14,165,233,0.15);
-  border: 1px solid rgba(56,189,248,0.3);
-  padding: 7px 18px; border-radius: 999px; margin-bottom: 28px;
-}
-.week-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #7dd3fc; box-shadow: 0 0 8px #7dd3fc; }
-.page-hero h1 {
-  font-family: var(--serif); font-style: italic;
-  font-size: clamp(2.4rem, 6vw, 5rem);
-  font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px;
-  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: fadeUp 0.7s 0.1s ease both;
-}
-.page-date { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-transform: uppercase; animation: fadeUp 0.7s 0.2s ease both; }
-
-.divider { position: relative; z-index: 1; max-width: 860px; margin: 0 auto 48px; padding: 0 24px; }
-.divider hr { border: none; border-top: 1px solid rgba(255,255,255,0.07); }
-
-.content { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 24px 100px; display: flex; flex-direction: column; gap: 16px; }
-
-.glass-card {
-  border-radius: 24px; padding: 36px 40px;
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: border-color 0.3s, background 0.3s;
-  animation: fadeUp 0.6s ease both;
-}
-.glass-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(125,211,252,0.2); }
-.glass-card:nth-child(1) { animation-delay: 0.05s; }
-.glass-card:nth-child(2) { animation-delay: 0.1s; }
-.glass-card:nth-child(3) { animation-delay: 0.15s; }
-.glass-card:nth-child(4) { animation-delay: 0.2s; }
-.glass-card:nth-child(5) { animation-delay: 0.25s; }
-
-.card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
-.card-icon {
-  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
-  background: rgba(14,165,233,0.2); border: 1px solid rgba(56,189,248,0.25);
-  display: flex; align-items: center; justify-content: center; font-size: 18px;
-}
-.card-title { font-family: var(--serif); font-style: italic; font-size: 1.45rem; font-weight: 300; color: rgba(255,255,255,0.9); }
-
-.glass-card p { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.85; margin-bottom: 14px; }
-.glass-card p:last-child { margin-bottom: 0; }
-
-/* Scope grid */
-.scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-.scope-box { border-radius: 14px; padding: 20px; }
-.scope-in  { background: rgba(74,222,128,0.07); border: 1px solid rgba(74,222,128,0.2); }
-.scope-out { background: rgba(248,113,113,0.07); border: 1px solid rgba(248,113,113,0.2); }
-.scope-box h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
-.scope-in  h4 { color: #4ade80; }
-.scope-out h4 { color: #f87171; }
-.scope-box ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-.scope-box ul li { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.55); padding-left: 16px; position: relative; }
-.scope-in  ul li::before { content: '✓'; position: absolute; left: 0; color: #4ade80; font-size: 11px; }
-.scope-out ul li::before { content: '✗'; position: absolute; left: 0; color: #f87171; font-size: 11px; }
-
-/* SMART list */
-.smart-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-.smart-item {
-  display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px;
-  border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-  transition: background 0.2s, border-color 0.2s;
-}
-.smart-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(125,211,252,0.2); }
-.smart-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-.smart-text { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.7; }
-.smart-text strong { font-weight: 600; color: rgba(255,255,255,0.9); }
-
-/* Role grid */
-.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
-.role-card { border-radius: 14px; padding: 22px; }
-.role-kasa   { background: rgba(124,58,237,0.1); border: 1px solid rgba(167,139,250,0.2); }
-.role-garson { background: rgba(14,165,233,0.1);  border: 1px solid rgba(56,189,248,0.2); }
-.role-card h4 { font-size: 12px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-.role-kasa   h4 { color: #c084fc; }
-.role-garson h4 { color: #7dd3fc; }
-.role-card ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0; }
-.role-card ul li { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.5); padding: 7px 0 7px 14px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.role-card ul li:last-child { border-bottom: none; }
-.role-kasa   ul li::before { content: '→'; position: absolute; left: 0; color: #c084fc; font-size: 10px; }
-.role-garson ul li::before { content: '→'; position: absolute; left: 0; color: #7dd3fc; font-size: 10px; }
-
-/* Tech list */
-.tech-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-.tech-item {
-  display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px;
-  border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-  transition: background 0.2s;
-}
-.tech-item:hover { background: rgba(255,255,255,0.06); }
-.tech-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7dd3fc; min-width: 130px; flex-shrink: 0; padding-top: 2px; }
-.tech-desc { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.7; }
-.tech-desc strong { font-weight: 600; color: rgba(255,255,255,0.85); }
-
-/* Screens grid */
-.screens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
-.screen-group { border-radius: 14px; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
-.screen-group h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
-.screen-group ul { list-style: none; padding: 0; }
-.screen-group ul li { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.5); padding: 6px 0 6px 14px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.04); }
-.screen-group ul li:last-child { border-bottom: none; }
-.screen-group ul li::before { content: '▸'; position: absolute; left: 0; color: #c084fc; font-size: 9px; }
-
-footer { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 24px 60px; }
-.footer-card {
-  border-radius: 24px; padding: 36px 44px;
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255,255,255,0.07);
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
-}
-.footer-name { font-family: var(--serif); font-style: italic; font-size: 1.4rem; font-weight: 300; color: rgba(255,255,255,0.6); }
-.footer-copy { font-size: 11px; color: rgba(255,255,255,0.15); letter-spacing: 0.08em; }
-
-@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
-@media (max-width: 600px) {
-  .page-hero { padding: 120px 20px 60px; }
-  .glass-card { padding: 28px 20px; }
-  .content { padding: 0 20px 80px; }
-  .scope-grid, .role-grid, .screens-grid { grid-template-columns: 1fr; }
-  .tech-label { min-width: 90px; }
-}
+:root{--bg:#050508;--glass:rgba(255,255,255,0.042);--border:rgba(255,255,255,0.07);--border-h:rgba(255,255,255,0.14);--text:rgba(255,255,255,0.92);--text-2:rgba(255,255,255,0.45);--text-3:rgba(255,255,255,0.22);--indigo:#f59e0b;--purple:#d97706;--teal:#b45309;--green:#22c55e;--red:#f87171;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',sans-serif;--mono:'JetBrains Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;min-height:100vh}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(180,83,9,0.4);border-radius:999px}
+::selection{background:rgba(180,83,9,0.3);color:#fff}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%)}
+#orb-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.55}
+.nav{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:200;display:flex;align-items:center;justify-content:space-between;width:min(900px,calc(100% - 48px));padding:0 6px 0 22px;height:52px;background:rgba(5,5,8,0.75);backdrop-filter:blur(32px) saturate(180%);-webkit-backdrop-filter:blur(32px) saturate(180%);border:1px solid var(--border);border-radius:999px;box-shadow:0 0 0 1px rgba(255,255,255,0.03),0 24px 64px rgba(0,0,0,0.7);animation:navIn .8s cubic-bezier(.16,1,.3,1) both}
+@keyframes navIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.nav-logo{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--text)}.nav-logo em{font-style:italic;color:var(--teal)}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--text-2);text-decoration:none;padding:8px 18px;border-radius:999px;border:1px solid var(--border);transition:all .2s}
+.back-btn:hover{background:rgba(180,83,9,.18);border-color:rgba(180,83,9,.4);color:var(--text)}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes heroIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.page-header{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:140px 24px 72px;text-align:center}
+.ph-badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(180,83,9,.9);background:rgba(180,83,9,.1);border:1px solid rgba(180,83,9,.22);padding:8px 20px;border-radius:999px;margin-bottom:36px;animation:heroIn 1s .2s cubic-bezier(.16,1,.3,1) both}
+.ph-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.ph-title{font-family:var(--serif);font-style:italic;font-size:clamp(2.2rem,6vw,4.8rem);font-weight:400;line-height:1.1;letter-spacing:-.02em;background:linear-gradient(160deg,#fff 0%,rgba(255,255,255,.6) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px;animation:heroIn 1s .35s cubic-bezier(.16,1,.3,1) both}
+.ph-date{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);animation:heroIn 1s .5s cubic-bezier(.16,1,.3,1) both}
+.pdiv{position:relative;z-index:1;max-width:820px;margin:0 auto 52px;padding:0 24px}.pdiv hr{border:none;border-top:1px solid var(--border)}
+.content{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:0 24px 100px;display:flex;flex-direction:column;gap:14px}
+.gc{border-radius:22px;padding:36px 40px;background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--border);opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease,border-color .3s,background .3s}
+.gc.visible{opacity:1;transform:translateY(0)}.gc:hover{background:rgba(255,255,255,.065);border-color:rgba(180,83,9,.2)}
+.gc:nth-child(1){transition-delay:.0s}.gc:nth-child(2){transition-delay:.06s}.gc:nth-child(3){transition-delay:.12s}.gc:nth-child(4){transition-delay:.18s}.gc:nth-child(5){transition-delay:.24s}
+.gc-header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.gc-icon{width:44px;height:44px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,rgba(180,83,9,.22),rgba(245,158,11,.18));border:1px solid rgba(180,83,9,.2);display:flex;align-items:center;justify-content:center;font-size:18px}
+.gc-title{font-family:var(--serif);font-style:italic;font-size:1.4rem;font-weight:400;color:var(--text);line-height:1.2}
+.gc p{font-size:14px;font-weight:300;color:var(--text-2);line-height:1.85;margin-bottom:12px}.gc p:last-child{margin-bottom:0}
+.scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.scope-box{border-radius:14px;padding:20px}.s-in{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2)}.s-out{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2)}
+.scope-box h4{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px}.s-in h4{color:var(--green)}.s-out h4{color:var(--red)}
+.scope-box ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:7px}.scope-box ul li{font-size:12px;font-weight:300;color:var(--text-2);padding-left:16px;position:relative;line-height:1.5}
+.s-in ul li::before{content:'✓';position:absolute;left:0;color:var(--green);font-size:10px}.s-out ul li::before{content:'✗';position:absolute;left:0;color:var(--red);font-size:10px}
+.smart-list{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.si{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.028);border:1px solid rgba(255,255,255,.055);transition:background .2s,border-color .2s}
+.si:hover{background:rgba(255,255,255,.055);border-color:rgba(180,83,9,.2)}.si-ico{font-size:18px;flex-shrink:0}
+.si-txt{font-size:13px;font-weight:300;color:var(--text-2);line-height:1.7}.si-txt strong{font-weight:600;color:rgba(255,255,255,.85)}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.rc{border-radius:14px;padding:22px}.rc-kasa{background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.2)}.rc-garson{background:rgba(180,83,9,.09);border:1px solid rgba(180,83,9,.2)}
+.rc h4{font-size:12px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}.rc-kasa h4{color:#fde68a}.rc-garson h4{color:#fde68a}
+.rc ul{list-style:none;padding:0;display:flex;flex-direction:column}.rc ul li{font-size:12px;font-weight:300;color:var(--text-2);padding:7px 0 7px 14px;position:relative;border-bottom:1px solid rgba(255,255,255,.045)}.rc ul li:last-child{border-bottom:none}
+.rc-kasa ul li::before{content:'→';position:absolute;left:0;color:#fde68a;font-size:10px}.rc-garson ul li::before{content:'→';position:absolute;left:0;color:#fde68a;font-size:10px}
+.tech-list{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.ti{display:flex;align-items:flex-start;gap:16px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.028);border:1px solid rgba(255,255,255,.055);transition:background .2s}
+.ti:hover{background:rgba(255,255,255,.055)}.ti-lbl{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#fde68a;min-width:140px;flex-shrink:0;padding-top:3px}
+.ti-desc{font-size:12px;font-weight:300;color:var(--text-2);line-height:1.75}.ti-desc strong{font-weight:600;color:rgba(255,255,255,.82)}
+.screens-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.sg{border-radius:14px;padding:22px;background:rgba(255,255,255,.028);border:1px solid rgba(255,255,255,.055)}.sg h4{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px}
+.sg ul{list-style:none;padding:0}.sg ul li{font-size:12px;font-weight:300;color:var(--text-2);padding:6px 0 6px 14px;position:relative;border-bottom:1px solid rgba(255,255,255,.04)}.sg ul li:last-child{border-bottom:none}
+.sg ul li::before{content:'▸';position:absolute;left:0;color:var(--teal);font-size:9px;top:7px}
+.footer{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:0 24px 60px}
+.fi{border-radius:24px;padding:40px 48px;background:rgba(255,255,255,.025);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.fi-title{font-family:var(--serif);font-style:italic;font-size:1.6rem;font-weight:400;color:rgba(255,255,255,.4)}.fi-copy{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--text-3)}
+@media(max-width:640px){.page-header{padding:110px 20px 52px}.gc{padding:28px 22px}.content{padding:0 20px 80px}.scope-grid,.role-grid,.screens-grid{grid-template-columns:1fr}.ti-lbl{min-width:100px}.fi{padding:32px 24px;flex-direction:column}}
 </style>
 </head>
 <body>
-
-<div class="orbs">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-</div>
-
-<nav>
-  <div class="nav-logo">Bedi <span>Cam</span></div>
+<canvas id="orb-canvas"></canvas>
+<nav class="nav">
+  <div class="nav-logo">Bedi <em>Cam</em></div>
   <a href="../index.html" class="back-btn">← Ana Sayfa</a>
   <div class="nav-dot"></div>
 </nav>
-
-<div class="page-hero">
-  <div class="week-badge">Hafta 02</div>
-  <h1>Sistem Analizi ve Gereksinim Belirleme</h1>
-  <div class="page-date">11 Mart 2026</div>
+<div class="page-header">
+  <div class="ph-badge">Hafta 02</div>
+  <h1 class="ph-title">Sistem Analizi ve<br>Gereksinim Belirleme</h1>
+  <div class="ph-date">11 Mart 2026</div>
 </div>
-
-<div class="divider"><hr></div>
-
+<div class="pdiv"><hr></div>
 <div class="content">
-
-  <!-- 1. Proje Özeti -->
-  <div class="glass-card">
-    <div class="card-header">
-      <div class="card-icon">📌</div>
-      <div class="card-title">Proje Özeti ve Kapsam</div>
-    </div>
+  <div class="gc">
+    <div class="gc-header"><div class="gc-icon">📌</div><div class="gc-title">Proje Özeti ve Kapsam</div></div>
     <p>Bu proje, döner salonundaki sipariş alma süreçlerini hızlandırmak ve kağıt adisyonlardan kaynaklanan hataları ortadan kaldırmak amacıyla geliştirilecek bir otomasyon uygulamasıdır.</p>
     <p>Proje dış süreçlerden arındırılarak tamamen işletme içi operasyonel verimliliğe odaklanmıştır. Garsonların mobil cihazları ile kasa bilgisayarına kurulacak ana uygulama arasında tam entegrasyon sağlanacaktır.</p>
     <div class="scope-grid">
-      <div class="scope-box scope-in">
-        <h4>✦ Kapsam İçi</h4>
-        <ul>
-          <li>Garson mobil sipariş uygulaması</li>
-          <li>Kasa takip paneli (Dashboard)</li>
-          <li>Menü yönetimi</li>
-          <li>Anlık cihaz senkronizasyonu</li>
-        </ul>
-      </div>
-      <div class="scope-box scope-out">
-        <h4>✦ Kapsam Dışı</h4>
-        <ul>
-          <li>Online müşteri siparişi</li>
-          <li>Stok ve maliyet takibi</li>
-          <li>Kurye modülü</li>
-          <li>Müşteri CRM sistemi</li>
-        </ul>
-      </div>
+      <div class="scope-box s-in"><h4>✦ Kapsam İçi</h4><ul><li>Garson mobil sipariş uygulaması</li><li>Kasa takip paneli (Dashboard)</li><li>Menü yönetimi</li><li>Anlık cihaz senkronizasyonu</li></ul></div>
+      <div class="scope-box s-out"><h4>✦ Kapsam Dışı</h4><ul><li>Online müşteri siparişi</li><li>Stok ve maliyet takibi</li><li>Kurye modülü</li><li>Müşteri CRM sistemi</li></ul></div>
     </div>
   </div>
-
-  <!-- 2. SMART Hedefler -->
-  <div class="glass-card">
-    <div class="card-header">
-      <div class="card-icon">🎯</div>
-      <div class="card-title">Hedefler (SMART)</div>
-    </div>
+  <div class="gc">
+    <div class="gc-header"><div class="gc-icon">🎯</div><div class="gc-title">Hedefler (SMART)</div></div>
     <div class="smart-list">
-      <div class="smart-item">
-        <span class="smart-icon">⏱</span>
-        <div class="smart-text">Garsonların sipariş alma süresini <strong>1 dakikanın altına</strong> indirmek.</div>
-      </div>
-      <div class="smart-item">
-        <span class="smart-icon">⚡</span>
-        <div class="smart-text">Siparişin kasa bilgisayarına iletilme süresini <strong>2 saniyenin altına</strong> düşürmek.</div>
-      </div>
-      <div class="smart-item">
-        <span class="smart-icon">🚀</span>
-        <div class="smart-text">Temel sipariş modülünü <strong>2 hafta içinde</strong> canlıya almak.</div>
-      </div>
+      <div class="si"><span class="si-ico">⏱</span><div class="si-txt">Garsonların sipariş alma süresini <strong>1 dakikanın altına</strong> indirmek.</div></div>
+      <div class="si"><span class="si-ico">⚡</span><div class="si-txt">Siparişin kasa bilgisayarına iletilme süresini <strong>2 saniyenin altına</strong> düşürmek.</div></div>
+      <div class="si"><span class="si-ico">🚀</span><div class="si-txt">Temel sipariş modülünü <strong>2 hafta içinde</strong> canlıya almak.</div></div>
     </div>
   </div>
-
-  <!-- 3. Kullanıcı İşlevleri -->
-  <div class="glass-card">
-    <div class="card-header">
-      <div class="card-icon">👥</div>
-      <div class="card-title">Sistem Gereksinimleri ve Kullanıcı İşlevleri</div>
-    </div>
+  <div class="gc">
+    <div class="gc-header"><div class="gc-icon">👥</div><div class="gc-title">Sistem Gereksinimleri ve Kullanıcı İşlevleri</div></div>
     <p>Sistem iki temel aktör tarafından kullanılacaktır. Web tarayıcı üzerinden çalışmayan, doğrudan cihazlara kurulacak kapalı devre bir yapı hedeflenmektedir.</p>
     <div class="role-grid">
-      <div class="role-card role-kasa">
-        <h4>🖥 Kasa (Ana Bilgisayar)</h4>
-        <ul>
-          <li>Yönetici / kasiyer girişi</li>
-          <li>Anlık sipariş Dashboard'u</li>
-          <li>Manuel sipariş girişi</li>
-          <li>Menü ve fiyat yönetimi</li>
-          <li>Çalışma saati tanımlama</li>
-          <li>Toplu sipariş iptali</li>
-          <li>Termal yazıcıdan adisyon çıktısı alma</li>
-        </ul>
-      </div>
-      <div class="role-card role-garson">
-        <h4>📱 Garson (Mobil Uygulama)</h4>
-        <ul>
-          <li>Garson girişi ve kimlik doğrulama</li>
-          <li>Masa seçimi ve sipariş alma</li>
-          <li>Anlık kasaya senkronizasyon</li>
-          <li>Sipariş durumu güncelleme</li>
-          <li>Aktif sipariş listesi görüntüleme</li>
-          <li>Tek elle kullanıma uygun arayüz</li>
-        </ul>
-      </div>
+      <div class="rc rc-kasa"><h4>🖥 Kasa (Ana Bilgisayar)</h4><ul><li>Yönetici / kasiyer girişi</li><li>Anlık sipariş Dashboard'u</li><li>Manuel sipariş girişi</li><li>Menü ve fiyat yönetimi</li><li>Çalışma saati tanımlama</li><li>Toplu sipariş iptali</li><li>Termal yazıcıdan adisyon çıktısı</li></ul></div>
+      <div class="rc rc-garson"><h4>📱 Garson (Mobil Uygulama)</h4><ul><li>Garson girişi ve kimlik doğrulama</li><li>Masa seçimi ve sipariş alma</li><li>Anlık kasaya senkronizasyon</li><li>Sipariş durumu güncelleme</li><li>Aktif sipariş listesi görüntüleme</li><li>Tek elle kullanıma uygun arayüz</li></ul></div>
     </div>
   </div>
-
-  <!-- 4. Teknoloji -->
-  <div class="glass-card">
-    <div class="card-header">
-      <div class="card-icon">⚙️</div>
-      <div class="card-title">Mimari ve Teknoloji Altyapısı</div>
-    </div>
+  <div class="gc">
+    <div class="gc-header"><div class="gc-icon">⚙️</div><div class="gc-title">Mimari ve Teknoloji Altyapısı</div></div>
     <div class="tech-list">
-      <div class="tech-item">
-        <span class="tech-label">Kasa Uygulaması</span>
-        <span class="tech-desc">Doğrudan işletme bilgisayarında çalışacak, <strong>Java Swing</strong> kütüphanesi ile geliştirilecek yüksek performanslı masaüstü arayüzü.</span>
-      </div>
-      <div class="tech-item">
-        <span class="tech-label">Arayüz Teknolojisi</span>
-        <span class="tech-desc">Tüm kullanıcı arayüzleri <strong>Java Swing</strong> bileşenleriyle oluşturulacak; platform bağımsız, hafif ve hızlı bir deneyim sunacak.</span>
-      </div>
-      <div class="tech-item">
-        <span class="tech-label">Veritabanı</span>
-        <span class="tech-desc">Verilerin güvenilirliği için <strong>MySQL</strong> kullanılacak; tasarım ve yönetim <strong>MySQL Workbench</strong> üzerinden gerçekleştirilecek.</span>
-      </div>
+      <div class="ti"><span class="ti-lbl">Kasa Uygulaması</span><span class="ti-desc">Doğrudan işletme bilgisayarında çalışacak, <strong>Java Swing</strong> kütüphanesi ile geliştirilecek yüksek performanslı masaüstü arayüzü.</span></div>
+      <div class="ti"><span class="ti-lbl">Arayüz Teknolojisi</span><span class="ti-desc">Tüm kullanıcı arayüzleri <strong>Java Swing</strong> bileşenleriyle oluşturulacak; platform bağımsız, hafif ve hızlı bir deneyim sunacak.</span></div>
+      <div class="ti"><span class="ti-lbl">Veritabanı</span><span class="ti-desc">Verilerin güvenilirliği için <strong>MySQL</strong> kullanılacak; tasarım ve yönetim <strong>MySQL Workbench</strong> üzerinden gerçekleştirilecek.</span></div>
     </div>
   </div>
-
-  <!-- 5. Ekranlar -->
-  <div class="glass-card">
-    <div class="card-header">
-      <div class="card-icon">📱</div>
-      <div class="card-title">Gerekli Uygulama Ekranları</div>
-    </div>
+  <div class="gc">
+    <div class="gc-header"><div class="gc-icon">📱</div><div class="gc-title">Gerekli Uygulama Ekranları</div></div>
     <div class="screens-grid">
-      <div class="screen-group">
-        <h4>🖥 Kasa Uygulaması</h4>
-        <ul>
-          <li>Ana Sipariş Takip Paneli (Dashboard)</li>
-          <li>Menü Yönetim Ekranı</li>
-          <li>Sipariş Detay ve Yönetim Penceresi</li>
-          <li>Çalışma Gün/Saat Tanımlama Ekranı</li>
-          <li>Termal Yazıcı Adisyon Çıktısı Ekranı</li>
-        </ul>
-      </div>
-      <div class="screen-group">
-        <h4>📱 Garson Mobil</h4>
-        <ul>
-          <li>Garson Giriş Ekranı</li>
-          <li>Masa ve Sipariş Alma Arayüzü</li>
-          <li>Aktif Siparişler Listesi</li>
-          <li>Sipariş Durum Güncelleme Ekranı</li>
-        </ul>
-      </div>
+      <div class="sg"><h4>🖥 Kasa Uygulaması</h4><ul><li>Ana Sipariş Takip Paneli (Dashboard)</li><li>Menü Yönetim Ekranı</li><li>Sipariş Detay ve Yönetim Penceresi</li><li>Çalışma Gün/Saat Tanımlama Ekranı</li><li>Termal Yazıcı Adisyon Çıktısı Ekranı</li></ul></div>
+      <div class="sg"><h4>📱 Garson Mobil</h4><ul><li>Garson Giriş Ekranı</li><li>Masa ve Sipariş Alma Arayüzü</li><li>Aktif Siparişler Listesi</li><li>Sipariş Durum Güncelleme Ekranı</li></ul></div>
     </div>
   </div>
-
 </div>
-
-<footer>
-  <div class="footer-card">
-    <div class="footer-name">Bedi Cam</div>
-    <div class="footer-copy">© 2026 — Sistem Analizi ve Tasarımı Dersi</div>
+<footer class="footer">
+  <div class="fi">
+    <div class="fi-copy">© 2026 — Sistem Analizi ve Tasarımı Dersi</div>
   </div>
 </footer>
-
+<script>
+const canvas=document.getElementById('orb-canvas'),ctx=canvas.getContext('2d');
+let W,H,t=0,mouse={x:0,y:0};
+const orbs=[{x:.12,y:.1,r:380,c:['#b45309','#0d9488'],vx:.0003,vy:.0002},{x:.85,y:.35,r:320,c:['#f59e0b','#4338ca'],vx:-.0002,vy:.0003},{x:.4,y:.88,r:300,c:['#d97706','#7c3aed'],vx:.0002,vy:-.0002}];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+function draw(){ctx.clearRect(0,0,W,H);t++;orbs.forEach((o,i)=>{const cx=(o.x+Math.sin(t*o.vx*100+i)*.07+(mouse.x/W-.5)*.04)*W;const cy=(o.y+Math.cos(t*o.vy*100+i)*.07+(mouse.y/H-.5)*.04)*H;const g=ctx.createRadialGradient(cx,cy,0,cx,cy,o.r);g.addColorStop(0,o.c[0]+'50');g.addColorStop(.5,o.c[1]+'1e');g.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(cx,cy,o.r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();});requestAnimationFrame(draw);}
+window.addEventListener('resize',resize);document.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
+resize();draw();
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.08});
+document.querySelectorAll('.gc').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
