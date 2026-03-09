@@ -4,19 +4,746 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog — Bedi Cam</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Space+Mono:wght@0,400;0,700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#050508;color:rgba(255,255,255,0.9);font-family:'JetBrains Mono',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;padding:24px}
-.title{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(3rem,10vw,6rem);color:rgba(255,255,255,0.1);letter-spacing:-.02em}
-.label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.18)}
-.back{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,158,11,0.7);text-decoration:none;border:1px solid rgba(245,158,11,0.2);padding:9px 22px;border-radius:999px;transition:all .2s}
-.back:hover{background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.45);color:rgba(245,158,11,1)}
+:root {
+  --bg:           #050508;
+  --bg-card:      #0f1419;
+  --bg-card-hover:#131c25;
+  --border:       rgba(255,255,255,0.08);
+  --accent:       #f59e0b;
+  --accent-dark:  #d97706;
+  --accent-light: #fbbf24;
+  --text:         rgba(255,255,255,0.92);
+  --text-muted:   rgba(255,255,255,0.55);
+  --text-dim:     rgba(255,255,255,0.22);
+  --blue:         #3b82f6;
+  --green:        #10b981;
+  --serif:        'Playfair Display', Georgia, serif;
+  --sans:         'DM Sans', sans-serif;
+  --mono:         'Space Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ambient glow */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px;
+  right: -150px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(ellipse, rgba(245,158,11,0.07) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── NAV ───────────────────────────────────────────── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 18px 0;
+  background: rgba(5,5,8,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.nav-logo em { color: var(--accent); font-style: italic; }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--accent); }
+
+/* ── HEADER ───────────────────────────────────────── */
+header {
+  padding: 90px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: -80px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(245,158,11,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.header-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(245,158,11,0.1);
+  padding: 7px 16px;
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: 50px;
+  margin-bottom: 20px;
+  animation: slideDown 0.6s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+.header-label::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+header h1 {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  animation: slideDown 0.6s cubic-bezier(0.16,1,0.3,1) 0.1s both;
+  background: linear-gradient(160deg, #fff 0%, rgba(255,255,255,0.55) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+header h1 span { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+
+.header-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 480px;
+  line-height: 1.8;
+  margin-bottom: 36px;
+  animation: slideDown 0.6s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+}
+
+.header-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: slideDown 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+}
+
+.stat {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 7px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+}
+
+.stat strong { color: var(--accent); }
+
+/* ── DIVIDER ──────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--blue), transparent);
+  margin: 56px 0;
+  opacity: 0.4;
+}
+
+/* ── FILTER TAGS ──────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.filter-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-tag:hover,
+.filter-tag.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(245,158,11,0.08);
+}
+
+/* ── FEATURED POST ────────────────────────────────── */
+.featured-post {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 20px;
+  padding: 44px 48px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+  animation: fadeUp 0.6s ease-out 0.1s both;
+}
+
+.featured-post::before {
+  content: 'ÖNE ÇIKAN';
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+.featured-post::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(245,158,11,0.06) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.featured-post:hover {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(245,158,11,0.12);
+}
+
+.featured-post:hover::after { opacity: 1; }
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.post-date {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.post-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  background: rgba(59,130,246,0.15);
+  border: 1px solid rgba(59,130,246,0.3);
+  color: var(--blue);
+}
+
+.post-tag.green {
+  background: rgba(16,185,129,0.12);
+  border-color: rgba(16,185,129,0.3);
+  color: var(--green);
+}
+
+.post-tag.amber {
+  background: rgba(245,158,11,0.12);
+  border-color: rgba(245,158,11,0.3);
+  color: var(--accent);
+}
+
+.featured-post h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.featured-post p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 580px;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(245,158,11,0.4);
+  padding: 9px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s;
+}
+
+.read-more span { transition: transform 0.2s; display: inline-block; }
+.featured-post:hover .read-more,
+.post-card:hover .read-more {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+
+.featured-post:hover .read-more span,
+.post-card:hover .read-more span { transform: translateX(4px); }
+
+/* ── POST GRID ────────────────────────────────────── */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  counter-reset: post-count;
+}
+
+/* ── POST CARD ────────────────────────────────────── */
+.post-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+  animation: fadeUp 0.6s ease-out both;
+}
+
+.post-card:nth-child(1) { animation-delay: 0.05s; }
+.post-card:nth-child(2) { animation-delay: 0.12s; }
+.post-card:nth-child(3) { animation-delay: 0.19s; }
+.post-card:nth-child(4) { animation-delay: 0.26s; }
+
+.post-card::before {
+  content: counter(post-count, decimal-leading-zero);
+  counter-increment: post-count;
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-family: var(--mono);
+  font-size: 44px;
+  font-weight: 700;
+  color: rgba(245,158,11,0.07);
+  line-height: 1;
+  pointer-events: none;
+  transition: color 0.25s;
+}
+
+.post-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(245,158,11,0.06) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.post-card:hover {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(245,158,11,0.1);
+}
+
+.post-card:hover::after { opacity: 1; }
+.post-card:hover::before { color: rgba(245,158,11,0.15); }
+
+.post-card h3 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+  max-width: 240px;
+}
+
+.post-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.75;
+  flex: 1;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.post-card .post-meta { margin-bottom: 14px; }
+
+/* ── READING TIME ─────────────────────────────────── */
+.reading-time {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+
+/* ── NEWSLETTER BLOCK ─────────────────────────────── */
+.newsletter {
+  background: rgba(245,158,11,0.06);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 20px;
+  padding: 48px;
+  text-align: center;
+  margin: 60px 0;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.6s ease-out 0.4s both;
+}
+
+.newsletter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.newsletter h3 {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-style: italic;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.newsletter p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.newsletter-form input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  width: 260px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.newsletter-form input::placeholder { color: var(--text-dim); }
+.newsletter-form input:focus { border-color: var(--accent); }
+
+.newsletter-form button {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.newsletter-form button:hover {
+  background: var(--accent-light);
+  transform: translateY(-1px);
+}
+
+/* ── FOOTER ───────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── ANIMATIONS ───────────────────────────────────── */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 640px) {
+  header { padding: 60px 0 40px; }
+  .featured-post { padding: 30px 24px; }
+  .featured-post::before { display: none; }
+  .post-card { padding: 24px; }
+  .newsletter { padding: 32px 24px; }
+  .nav-links { gap: 18px; }
+  .newsletter-form { flex-direction: column; align-items: center; }
+  .newsletter-form input { width: 100%; max-width: 320px; }
+}
 </style>
 </head>
 <body>
-<div class="title">Blog</div>
-<span class="label">Yakında</span>
-<a href="index.html" class="back">← Ana Sayfa</a>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <a href="index.html" class="nav-logo">Bedi <em>Cam</em></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="rapor.html">Rapor</a></li>
+      <li><a href="proje.html">Proje</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="header-label">Kişisel Blog</div>
+    <h1>Düşünceler &<br><span>Notlar</span></h1>
+    <p class="header-desc">
+      Yazılım geliştirme, proje deneyimleri ve öğrendiklerim üzerine kısa yazılar.
+    </p>
+    <div class="header-stats">
+      <div class="stat"><strong>6</strong> Yazı</div>
+      <div class="stat"><strong>2026</strong> Bahar</div>
+      <div class="stat">Türkçe</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="divider"></div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-tag active">Tümü</button>
+    <button class="filter-tag">Java</button>
+    <button class="filter-tag">Veritabanı</button>
+    <button class="filter-tag">Proje</button>
+    <button class="filter-tag">Kişisel</button>
+  </div>
+
+  <!-- FEATURED POST -->
+  <a href="#" class="featured-post">
+    <div class="post-meta">
+      <span class="post-date">10 Mart 2026</span>
+      <span class="post-tag amber">Proje</span>
+      <span class="reading-time">5 dk okuma</span>
+    </div>
+    <h2>Döner Salonu Projesinde<br>İlk İki Haftanın Özeti</h2>
+    <p>
+      Sistem Analizi dersi kapsamında başlattığımız sipariş takip otomasyonu projesinde ilk iki haftayı tamamladık. Paydaş analizi, SMART hedefler ve teknoloji seçiminden öğrendiklerim — artıları, eksileri ve beklenmedik zorluklar.
+    </p>
+    <span class="read-more">Devamını Oku <span>→</span></span>
+  </a>
+
+  <!-- POST GRID -->
+  <div class="posts-grid" style="margin-top: 24px;">
+
+    <a href="#" class="post-card">
+      <div class="post-meta">
+        <span class="post-date">4 Mart 2026</span>
+        <span class="post-tag">Java</span>
+      </div>
+      <h3>Java Swing ile Neden Devam Ettim?</h3>
+      <p>Pek çok modern alternatif varken Java Swing'i seçmek ne kadar mantıklı? Masaüstü uygulaması geliştirirken öğrendiklerim.</p>
+      <span class="read-more">Oku <span>→</span></span>
+    </a>
+
+    <a href="#" class="post-card">
+      <div class="post-meta">
+        <span class="post-date">27 Şubat 2026</span>
+        <span class="post-tag green">Veritabanı</span>
+      </div>
+      <h3>MySQL ile İlk Gerçek Proje Deneyimim</h3>
+      <p>Workbench'ten çok daha karmaşık şeyler öğrendim. İlişkisel veritabanı tasarlarken yaptığım hatalar ve çözümleri.</p>
+      <span class="read-more">Oku <span>→</span></span>
+    </a>
+
+    <a href="#" class="post-card">
+      <div class="post-meta">
+        <span class="post-date">20 Şubat 2026</span>
+        <span class="post-tag">Proje</span>
+      </div>
+      <h3>Paydaş Analizi: Düşündüğümden Zor</h3>
+      <p>Sadece teknik değil, insanların ihtiyaçlarını anlamak da mühendislik. İlk paydaş görüşmemden notlar.</p>
+      <span class="read-more">Oku <span>→</span></span>
+    </a>
+
+    <a href="#" class="post-card">
+      <div class="post-meta">
+        <span class="post-date">12 Şubat 2026</span>
+        <span class="post-tag green">Kişisel</span>
+      </div>
+      <h3>2. Yıla Başlarken Hedeflerim</h3>
+      <p>Bilgisayar Programcılığı 2. yılı nasıl geçirmek istiyorum, ne öğrenmeli, neleri geliştirmeli?</p>
+      <span class="read-more">Oku <span>→</span></span>
+    </a>
+
+    <a href="#" class="post-card">
+      <div class="post-meta">
+        <span class="post-date">5 Şubat 2026</span>
+        <span class="post-tag">Java</span>
+      </div>
+      <h3>3-Katmanlı Mimariye Giriş</h3>
+      <p>Presentation, Business, Data katmanları neden ayrılır? Somut örneklerle katmanlı mimari mantığını anlama sürecim.</p>
+      <span class="read-more">Oku <span>→</span></span>
+    </a>
+
+    <a href="#" class="post-card">
+      <div class="post-meta">
+        <span class="post-date">28 Ocak 2026</span>
+        <span class="post-tag green">Kişisel</span>
+      </div>
+      <h3>GitHub Pages ile Blog Nasıl Kurdum?</h3>
+      <p>Ücretsiz, sade ve tam kontrolüm altında bir blog. Statik HTML ile GitHub Pages'ı nasıl kullandım.</p>
+      <span class="read-more">Oku <span>→</span></span>
+    </a>
+
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter">
+    <h3>Yeni yazılardan haberdar ol</h3>
+    <p>Proje notlarımı ve deneyimlerimi paylaştığımda mail almak ister misin?</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="email@örnek.com">
+      <button type="button">Abone Ol →</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 — Bedi Cam &nbsp;·&nbsp; Hassa Meslek Yüksekokulu</p>
+</footer>
+
+<script>
+  // Filter tag interaction
+  document.querySelectorAll('.filter-tag').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+
 </body>
 </html>
