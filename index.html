@@ -3,109 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bedi CAM - Proje Raporları</title>
+    <title>Bedi CAM - Döner Salonu Otomasyonu Raporları</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1><i class="fas fa-file-alt"></i> Akademik Proje Raporları</h1>
-            <p>Sistem Analizi ve Tasarımı Dersi Haftalık Gelişim Kayıtları</p>
+            <h1><i class="fas fa-utensils"></i> Döner Salonu Sipariş Otomasyonu</h1>
+            <p>Sistem Analizi ve Tasarımı Dersi - 6 Haftalık Proje Gelişim Raporu</p>
         </div>
     </header>
 
     <main class="container">
-        <!-- PROJE 1: DÖNER SALONU -->
+        <!-- PROJE ÖZETİ -->
+        <section class="project-card" style="margin-top: 20px;">
+            <div class="card-header" style="background: #e74c3c;">
+                <h2>Proje Hakkında Genel Bilgi</h2>
+            </div>
+            <div style="padding: 20px;">
+                <p>Bu proje, bir döner salonu işletmesindeki sipariş süreçlerini dijitalleştirmeyi amaçlayan, LAN tabanlı çalışan bir otomasyon sistemidir. Garsonların mobil (Android) cihazlardan sipariş almasını ve kasa bilgisayarı ile anlık senkronizasyonunu hedefler.</p>
+            </div>
+        </section>
+
+        <!-- HAFTALIK RAPORLAR -->
         <section class="project-card">
             <div class="card-header">
-                <h2>1. Proje: Döner Salonu Sipariş Otomasyonu</h2>
+                <h2>Haftalık Gelişim Süreci</h2>
                 <span class="status-badge">Tamamlandı</span>
             </div>
             <div class="report-list">
+                <!-- 1. HAFTA -->
                 <div class="report-item">
                     <div class="week">1. Hafta</div>
                     <div class="content">
-                        <h3>Proje Teklif Raporu</h3>
-                        <p>Döner salonu işletmesindeki manuel süreçlerin dijitalleşmesi için gereksinim analizi yapıldı. SMART hedefler belirlendi.</p>
+                        <h3>Proje Teklif Raporu ve Gereksinim Analizi</h3>
+                        <p>İşletmedeki manuel adisyon süreçlerindeki hataları ve zaman kaybını belirleyerek projeyi teklif ettim.</p>
                         <ul class="highlights">
-                            <li>LAN tabanlı kapalı devre mimari tasarlandı.</li>
-                            <li>Sipariş senkronizasyonu süresi < 2 sn olarak hedeflendi.</li>
+                            <li>Problem tanımı ve SMART hedefler oluşturuldu.</li>
+                            <li>Paydaş analizi ve fonksiyonel gereksinimler belirlendi.</li>
                         </ul>
                     </div>
                 </div>
+
+                <!-- 2. HAFTA -->
                 <div class="report-item">
                     <div class="week">2. Hafta</div>
                     <div class="content">
                         <h3>UML Modelleme ve Tasarım</h3>
-                        <p>Use Case, Activity ve Sequence diyagramları oluşturuldu. Katmanlı mimari (Layered Architecture) yapısı kuruldu.</p>
+                        <p>Sistemin mantıksal yapısını UML standartlarına uygun olarak modeledim.</p>
                         <ul class="highlights">
-                            <li>Garson, Kasiyer ve Yönetici aktörleri tanımlandı.</li>
-                            <li>Sipariş detaylandırma (Sos, Acı, Ketçap vb.) özellikleri entegre edildi.</li>
+                            <li>Use Case ve Activity diyagramları çizildi.</li>
+                            <li>Garson, Kasiyer ve Yönetici aktörlerinin iş akışları tanımlandı.</li>
                         </ul>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- PROJE 2: DÜĞÜN TAKİP -->
-        <section class="project-card">
-            <div class="card-header">
-                <h2>2. Proje: Düğün Takip Otomasyonu</h2>
-                <span class="status-badge">Tamamlandı</span>
-            </div>
-            <div class="report-list">
+                <!-- 3. HAFTA -->
                 <div class="report-item">
                     <div class="week">3. Hafta</div>
                     <div class="content">
-                        <h3>Sistem Analizi ve Gereksinimler</h3>
-                        <p>Düğün salonlarında yaşanan çifte rezervasyon (double-booking) probleminin çözümü için sistem analizi raporu hazırlandı.</p>
+                        <h3>Katmanlı Mimari ve İlk Prototip</h3>
+                        <p>Java dilinde katmanlı mimari (Model-DAO-Service-UI) kullanılarak sistemin çekirdek yapısı oluşturuldu.</p>
                         <ul class="highlights">
-                            <li>Yönetici ve Sekreterya rolleri için yetkilendirme sistemi kurgulandı.</li>
-                            <li>SMART kriterlerine uygun 3 temel hedef belirlendi.</li>
+                            <li>Konsol üzerinden çalışan ilk prototip geliştirildi.</li>
+                            <li>Veri saklama katmanı (Mock Database) simüle edildi.</li>
                         </ul>
                     </div>
                 </div>
+
+                <!-- 4. HAFTA -->
                 <div class="report-item">
                     <div class="week">4. Hafta</div>
                     <div class="content">
-                        <h3>UML Modelleme ve Prototip Geliştirme</h3>
-                        <p>Süreç diyagramları ve veritabanı şeması oluşturuldu. Java Swing kullanılarak ilk çalışan prototip teslim edildi.</p>
+                        <h3>Sipariş Detaylandırma ve Seçenekler</h3>
+                        <p>Müşteri tercihlerini (Bol soslu, acısız, ketçapsız vb.) sisteme yansıtmak için özelleştirme sistemi eklendi.</p>
                         <ul class="highlights">
-                            <li>Rezervasyon çakışma kontrolü algoritması geliştirildi.</li>
-                            <li>Finans modülü ile kapora ve bakiye takibi sağlandı.</li>
+                            <li>Döner ve yiyecekler için dinamik seçenek pencereleri oluşturuldu.</li>
+                            <li>Ayran gibi içecekler için seçenek pencereleri otomatik olarak kapatıldı (UX İyileştirmesi).</li>
                         </ul>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- PROJE 3: EMLAK SATIŞ -->
-        <section class="project-card">
-            <div class="card-header">
-                <h2>3. Proje: Emlak Satış Otomasyonu</h2>
-                <span class="status-badge">Tamamlandı</span>
-            </div>
-            <div class="report-list">
+                <!-- 5. HAFTA -->
                 <div class="report-item">
                     <div class="week">5. Hafta</div>
                     <div class="content">
-                        <h3>Emlak Platformu Analizi</h3>
-                        <p>Gayrimenkul danışmanları ve alıcılar arasındaki veri karmaşasını önlemek amacıyla ilan yönetim sistemi tasarlandı.</p>
+                        <h3>Java Swing GUI Geçişi</h3>
+                        <p>Sistem konsoldan tamamen grafiksel bir kullanıcı arayüzüne (Swing) taşındı.</p>
                         <ul class="highlights">
-                            <li>İlan onay/red mekanizması (Admin onayı) gereksinimleri belirlendi.</li>
-                            <li>Dinamik filtreleme ve gelişmiş arama senaryoları modellendi.</li>
+                            <li>Görsel Giriş (Login) ekranı ve role özel paneller tasarlandı.</li>
+                            <li>Tablo yapısı ile sipariş takip süreçleri kolaylaştırıldı.</li>
                         </ul>
                     </div>
                 </div>
+
+                <!-- 6. HAFTA -->
                 <div class="report-item">
                     <div class="week">6. Hafta</div>
                     <div class="content">
-                        <h3>UML Modelleme ve GUI Geliştirme</h3>
-                        <p>Sistemin State Machine (İlan durum döngüsü) ve Sequence diyagramları hazırlandı. Java Swing prototipi tamamlandı.</p>
+                        <h3>Dağıtım Hazırlığı ve Final Kontrolleri</h3>
+                        <p>Uygulamanın farklı bilgisayarlarda çalışabilmesi için JAR dosyası oluşturma ve final testleri yapıldı.</p>
                         <ul class="highlights">
-                            <li>İlan onay süreci ve favori sistemi kodlandı.</li>
-                            <li>Emlakçı ve Admin panelleri arası senkronizasyon sağlandı.</li>
+                            <li>Executable JAR oluşturma aracı (jar_yap.bat) geliştirildi.</li>
+                            <li>Tüm sistemin final demosu gerçekleştirildi.</li>
                         </ul>
                     </div>
                 </div>
